@@ -1,3 +1,4 @@
+// No 1
 export const fetchData = (status) => {
   return new Promise((resolve, reject) => {
     if (status) {
@@ -9,5 +10,3 @@ export const fetchData = (status) => {
     }
   });
 };
-
-fetch(url);

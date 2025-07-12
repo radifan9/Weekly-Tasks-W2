@@ -1,7 +1,9 @@
 "use strict";
 
 import { fetchData } from "./src/fetchData.js";
+import { getDataFromServer, processData } from "./src/dataFromServer.js";
 
+// No 1
 // then-catch
 // Success
 // fetchData(true)
@@ -71,3 +73,18 @@ import { fetchData } from "./src/fetchData.js";
  * Jika ada error atau "rejected" promised, hal tersebut akan di alihkan ke block kode catch.
  * Kita juga bisa menambahkan kode blok finnaly yang berisikan kode yang ingin kita jalankan baik itu error maupun tidak.
  */
+
+// No 2
+const getListofProduct = (status, callback) => {
+  try {
+    getDataFromServer(status, callback);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Success
+// getListofProduct(true, processData);
+
+// Failed
+// getListofProduct(false, processData);

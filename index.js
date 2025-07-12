@@ -1,7 +1,11 @@
 "use strict";
 
+// No 1
 import { fetchData } from "./src/fetchData.js";
+// No 2
 import { getDataFromServer, processData } from "./src/dataFromServer.js";
+// No 5
+import { getImportantData } from "./src/pokemon.js";
 
 // No 1
 // then-catch
@@ -88,3 +92,22 @@ const getListofProduct = (status, callback) => {
 
 // Failed
 // getListofProduct(false, processData);
+
+// No 5
+// Use Fetch API to Get a Local Pokedex
+const inputPokedex = async (input) => {
+  try {
+    const result = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
+    if (!result.ok) {
+      throw new Error("Error fetching pokemon data or pokemon name not found.");
+    }
+    const body = await result.json();
+
+    const data = getImportantData(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+inputPokedex("charizard");

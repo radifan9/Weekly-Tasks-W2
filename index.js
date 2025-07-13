@@ -13,8 +13,6 @@ import { fetchData } from "./src/fetchData.js";
 // No 2
 import { getDataFromServer, processData } from "./src/dataFromServer.js";
 
-// No 3
-
 // No 4
 import { divideAndSort } from "./src/divideSort.js";
 
@@ -26,6 +24,7 @@ import {
   inputPokedex,
   getImportantData,
   deletePokedexAtIndex,
+  editNumOfCaughtPokemon,
 } from "./src/pokemon.js";
 
 // No 1
@@ -155,38 +154,56 @@ function sortStrings(arr) {
 // })();
 
 // No 4
-console.log(divideAndSort(5956560159466056));
+// console.log(divideAndSort(5956560159466056));
 
 // No 5
 
-//   async function name() {
-//     try {
-//       showWelcomeScreen();
-//       await readPokedex();
+(async function name() {
+  try {
+    showWelcomeScreen();
 
-//       mainUI();
-//       const userUIInput = await input.question("\nWhat do you want to do? ");
+    while (true) {
+      await readPokedex();
 
-//       switch (userUIInput) {
-//         case "1":
-//           const userInputName = await input.question(
-//             "Input name of the pokemon you caught : "
-//           );
-//           const userInputNumberOfOwned = await input.question(
-//             `Input number of caught ${userInputName} : `
-//           );
-//           inputPokedex(userInputName, userInputNumberOfOwned);
-//           break;
-//         case "3":
-//           const userInputIndex = await input.question(
-//             "Input pokédex index you want to delete : "
-//           );
+      mainUI();
 
-//           deletePokedexAtIndex(userInputIndex - 1);
-//           break;
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-// )();
+      const userUIInput = await input.question("\nWhat do you want to do? ");
+
+      switch (userUIInput) {
+        case "1":
+          const userInputName = await input.question(
+            "Input name of the pokemon you caught : "
+          );
+          const userInputNumberOfOwned = await input.question(
+            `Input number of caught ${userInputName} : `
+          );
+          inputPokedex(userInputName, userInputNumberOfOwned);
+          break;
+
+        case "2":
+          const userInputPokemonIndex = await input.question(
+            "Input the index of pokemon you want to change? "
+          );
+          const userInputNum = await input.question(
+            "Input the new number of caught pokemon? "
+          );
+          editNumOfCaughtPokemon(userInputPokemonIndex, userInputNum);
+          break;
+
+        case "3":
+          const userInputIndex = await input.question(
+            "Input pokédex index you want to delete : "
+          );
+          deletePokedexAtIndex(userInputIndex - 1);
+          break;
+
+        default:
+          console.log("Invalid option. Please choose 1, 2, or 3.");
+      }
+
+      mainUI();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+})();

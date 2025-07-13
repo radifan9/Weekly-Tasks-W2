@@ -1,6 +1,11 @@
 import fs from "node:fs/promises";
+import path, { dirname } from "node:path";
 import chalk from "chalk";
 import { createInterface } from "node:readline/promises";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const showWelcomeScreen = () => {
   console.log(`
@@ -23,26 +28,28 @@ export const mainUI = async () => {
 
 export const readPokedex = async () => {
   try {
-    const result = await fs.readFile("data.json", "utf-8");
-    // const data = JSON.parse(result);
+    const result = await fs.readFile(
+      path.join(__dirname, "/data/data.json"),
+      "utf-8"
+    );
     const data = result.trim() === "" ? [] : JSON.parse(result);
 
     if (result.trim() === "") {
-      console.log(chalk.gray(`════════════════No0═════════════════`));
-      console.log(chalk.gray("═══════════Pokedex Empty════════════"));
-      console.log(chalk.gray("════════════════════════════════════\n"));
+      console.log(chalk.gray(`══════════════════No0═══════════════════`));
+      console.log(chalk.gray("═════════════Pokedex Empty══════════════"));
+      console.log(chalk.gray("════════════════════════════════════════\n"));
       return;
     }
 
     for (const [index, element] of data.entries()) {
       console.log(
-        chalk.gray(`════════════════No${index + 1}═════════════════`)
+        chalk.gray(`══════════════════No${index + 1}═══════════════════`)
       );
       console.log(chalk.white.bold(`Pokémon : ${element.name}`));
       console.log(chalk.white(`Abilities  : ${element.abilities}`));
       console.log(chalk.white(`Types : ${element.types}`));
       console.log(chalk.white(`Owned : ${element.owned}`));
-      console.log(chalk.gray("════════════════════════════════════\n"));
+      console.log(chalk.gray("════════════════════════════════════════\n"));
     }
   } catch (error) {
     console.error(error);
@@ -106,13 +113,19 @@ export const getImportantData = (body) => {
 
 const addToPokedex = async (newData) => {
   try {
-    const oldDataRaw = await fs.readFile("data.json", "utf-8");
-    // const oldData = JSON.parse(oldDataRaw);
+    const oldDataRaw = await fs.readFile(
+      path.join(__dirname, "/data/data.json"),
+      "utf-8"
+    );
     const oldData = oldDataRaw.trim() === "" ? [] : JSON.parse(oldDataRaw);
     const allData = [...oldData, newData];
 
     // Write to json file
-    await fs.writeFile("data.json", JSON.stringify(allData, null, 2), "utf-8");
+    await fs.writeFile(
+      path.join(__dirname, "/data/data.json"),
+      JSON.stringify(allData, null, 2),
+      "utf-8"
+    );
     console.log("Pokemon successfully added to pokedex!");
     readPokedex();
   } catch (error) {
@@ -120,9 +133,31 @@ const addToPokedex = async (newData) => {
   }
 };
 
+export const editNumOfCaughtPokemon = async (index, num) => {
+  try {
+    const dataRaw = await fs.readFile(
+      path.join(__dirname, "/data/data.json"),
+      "utf-8"
+    );
+    const data = await JSON.parse(dataRaw);
+
+    // Edit Num of Caught at Index
+    data[index - 1].owned = num;
+
+    // Save change
+    await fs.writeFile("data.json", JSON.stringify(data, null, 2), "utf-8");
+    console.log("Number of caught pokemon successfully changed!");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deletePokedexAtIndex = async (deleteIndex) => {
   try {
-    const result = await fs.readFile("data.json", "utf-8");
+    const result = await fs.readFile(
+      path.join(__dirname, "/data/data.json"),
+      "utf-8"
+    );
     const data = JSON.parse(result);
 
     // Create new array of object without selected index
@@ -135,7 +170,11 @@ export const deletePokedexAtIndex = async (deleteIndex) => {
     }
 
     // Write new array into an json
-    await fs.writeFile("data.json", JSON.stringify(newData, null, 2), "utf-8");
+    await fs.writeFile(
+      path.join(__dirname, "/data/data.json"),
+      JSON.stringify(newData, null, 2),
+      "utf-8"
+    );
     console.log("Files deleted successfully");
   } catch (error) {
     console.error(error);

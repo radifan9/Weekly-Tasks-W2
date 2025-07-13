@@ -1,11 +1,25 @@
 "use strict";
 
+// General import
+import { createInterface } from "node:readline/promises";
+const input = createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
 // No 1
 import { fetchData } from "./src/fetchData.js";
 // No 2
 import { getDataFromServer, processData } from "./src/dataFromServer.js";
 // No 5
-import { getImportantData } from "./src/pokemon.js";
+import {
+  showWelcomeScreen,
+  mainUI,
+  readPokedex,
+  inputPokedex,
+  getImportantData,
+  deletePokedexAtIndex,
+} from "./src/pokemon.js";
 
 // No 1
 // then-catch
@@ -94,20 +108,48 @@ const getListofProduct = (status, callback) => {
 // getListofProduct(false, processData);
 
 // No 5
-// Use Fetch API to Get a Local Pokedex
-const inputPokedex = async (input) => {
-  try {
-    const result = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
-    if (!result.ok) {
-      throw new Error("Error fetching pokemon data or pokemon name not found.");
-    }
-    const body = await result.json();
 
-    const data = getImportantData(body);
-    console.log(data);
+// while (true) {
+//   showWelcomeScreen();
+//   readPokedex();
+
+//   const userInputName = await input.question(
+//     "Input name of the pokemon you caught : "
+//   );
+//   const userInputNumberOfOwned = await input.question(
+//     `Input number of caught ${userInputName} : `
+//   );
+//   inputPokedex(userInputName, userInputNumberOfOwned);
+//   break;
+// }
+
+(async function name() {
+  try {
+    showWelcomeScreen();
+    await readPokedex();
+
+    mainUI();
+    const userUIInput = await input.question("\nWhat do you want to do? ");
+
+    switch (userUIInput) {
+      case "1":
+        const userInputName = await input.question(
+          "Input name of the pokemon you caught : "
+        );
+        const userInputNumberOfOwned = await input.question(
+          `Input number of caught ${userInputName} : `
+        );
+        inputPokedex(userInputName, userInputNumberOfOwned);
+        break;
+      case "3":
+        const userInputIndex = await input.question(
+          "Input pokédex index you want to delete : "
+        );
+
+        deletePokedexAtIndex(userInputIndex - 1);
+        break;
+    }
   } catch (error) {
     console.error(error);
   }
-};
-
-inputPokedex("charizard");
+})();

@@ -7,16 +7,9 @@ const input = createInterface({
   output: process.stdout,
 });
 
-// No 1
 import { fetchData } from "./src/fetchData.js";
-
-// No 2
 import { getDataFromServer, processData } from "./src/dataFromServer.js";
-
-// No 4
 import { divideAndSort } from "./src/divideSort.js";
-
-// No 5
 import {
   showWelcomeScreen,
   mainUI,
@@ -27,7 +20,7 @@ import {
   editNumOfCaughtPokemon,
 } from "./src/pokemon.js";
 
-// No 1
+// ---------- No 1 ----------
 // then-catch
 // Success
 // fetchData(true)
@@ -98,7 +91,7 @@ import {
  * Kita juga bisa menambahkan kode blok finnaly yang berisikan kode yang ingin kita jalankan baik itu error maupun tidak.
  */
 
-// No 2
+// ---------- No 2 ----------
 const getListofProduct = (status, callback) => {
   try {
     getDataFromServer(status, callback);
@@ -113,7 +106,7 @@ const getListofProduct = (status, callback) => {
 // Failed
 // getListofProduct(false, processData);
 
-// No 3
+// ---------- No 3 ----------
 function sortStrings(arr) {
   // source : https://www.geeksforgeeks.org/dsa/sorting-strings-using-bubble-sort-2/
   let temp;
@@ -153,11 +146,10 @@ function sortStrings(arr) {
 //   }
 // })();
 
-// No 4
+// ---------- No 4 ----------
 // console.log(divideAndSort(5956560159466056));
 
-// No 5
-
+// ---------- No 5 ----------
 (async function name() {
   try {
     showWelcomeScreen();
@@ -200,8 +192,6 @@ function sortStrings(arr) {
         default:
           console.log("Invalid option. Please choose 1, 2, or 3.");
       }
-
-      mainUI();
     }
   } catch (error) {
     console.error(error);

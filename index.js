@@ -9,8 +9,12 @@ const input = createInterface({
 
 // No 1
 import { fetchData } from "./src/fetchData.js";
+
 // No 2
 import { getDataFromServer, processData } from "./src/dataFromServer.js";
+
+// No 3
+
 // No 5
 import {
   showWelcomeScreen,
@@ -107,49 +111,76 @@ const getListofProduct = (status, callback) => {
 // Failed
 // getListofProduct(false, processData);
 
-// No 5
+// No 3
+function sortStrings(arr) {
+  // source : https://www.geeksforgeeks.org/dsa/sorting-strings-using-bubble-sort-2/
+  let temp;
 
-// while (true) {
-//   showWelcomeScreen();
-//   readPokedex();
-
-//   const userInputName = await input.question(
-//     "Input name of the pokemon you caught : "
-//   );
-//   const userInputNumberOfOwned = await input.question(
-//     `Input number of caught ${userInputName} : `
-//   );
-//   inputPokedex(userInputName, userInputNumberOfOwned);
-//   break;
-// }
-
-(async function name() {
-  try {
-    showWelcomeScreen();
-    await readPokedex();
-
-    mainUI();
-    const userUIInput = await input.question("\nWhat do you want to do? ");
-
-    switch (userUIInput) {
-      case "1":
-        const userInputName = await input.question(
-          "Input name of the pokemon you caught : "
-        );
-        const userInputNumberOfOwned = await input.question(
-          `Input number of caught ${userInputName} : `
-        );
-        inputPokedex(userInputName, userInputNumberOfOwned);
-        break;
-      case "3":
-        const userInputIndex = await input.question(
-          "Input pokédex index you want to delete : "
-        );
-
-        deletePokedexAtIndex(userInputIndex - 1);
-        break;
+  // Sorting strings using bubble sort
+  for (let j = 0; j < arr.length - 1; j++) {
+    for (let i = j + 1; i < arr.length; i++) {
+      if (arr[j].city.localeCompare(arr[i].city) > 0) {
+        temp = arr[j];
+        arr[j] = arr[i];
+        arr[i] = temp;
+      }
     }
+  }
+}
+
+(async () => {
+  try {
+    // Fetch data
+    const result = await fetch("https://jsonplaceholder.typicode.com/users");
+    if (!result.ok) throw new Error("Error fetching data");
+    const body = await result.json();
+
+    let userData = [];
+    for (const element of body) {
+      const userObj = {};
+      Object.assign(userObj, { name: element.name });
+      Object.assign(userObj, { city: element.address.city });
+      userData[userData.length] = userObj;
+    }
+
+    // Sort arr according to city (ascending)
+    sortStrings(userData); // Pass arr reference
+    console.log(userData);
   } catch (error) {
     console.error(error);
   }
 })();
+
+// No 5
+
+//   async function name() {
+//     try {
+//       showWelcomeScreen();
+//       await readPokedex();
+
+//       mainUI();
+//       const userUIInput = await input.question("\nWhat do you want to do? ");
+
+//       switch (userUIInput) {
+//         case "1":
+//           const userInputName = await input.question(
+//             "Input name of the pokemon you caught : "
+//           );
+//           const userInputNumberOfOwned = await input.question(
+//             `Input number of caught ${userInputName} : `
+//           );
+//           inputPokedex(userInputName, userInputNumberOfOwned);
+//           break;
+//         case "3":
+//           const userInputIndex = await input.question(
+//             "Input pokédex index you want to delete : "
+//           );
+
+//           deletePokedexAtIndex(userInputIndex - 1);
+//           break;
+//       }
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+// )();

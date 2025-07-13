@@ -22,10 +22,8 @@ export const processData = (success, failed) => {
     for (const [index, element] of success.entries()) {
       console.log(`${index} : ${element}`);
     }
-  }
-
-  // Jika gagal, failed ada isinya (tidak null)
-  if (failed) {
+  } else {
+    // Jika gagal, failed ada isinya (tidak null)
     throw Error(failed); // throw object Error dari getDataFromServer
   }
 };

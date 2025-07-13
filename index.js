@@ -15,50 +15,49 @@ import {
   mainUI,
   readPokedex,
   inputPokedex,
-  getImportantData,
   deletePokedexAtIndex,
   editNumOfCaughtPokemon,
 } from "./src/pokemon.js";
-
-// ---------- No 1 ----------
+// ------------------------------
+// ------------ No 1 ------------
+// ------------------------------
 // then-catch
 // Success
-// fetchData(true)
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
+fetchData(true)
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Failed
 /*
  * Disini failed akan muncul duluan karena jika fail tidak menjalankan setTimeout
  */
-// fetchData(false)
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((err) => {
-//     console.log("INI GAGAL");
-//     console.error(err);
-//   });
+fetchData(false)
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Try-Catch
-// async function goFetchData(status) {
-//   try {
-//     const response = await fetchData(status);
-//     console.log(response);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+async function goFetchData(status) {
+  try {
+    const response = await fetchData(status);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // Success
-// goFetchData(true);
+goFetchData(true);
 
 // Failed
-// goFetchData(false);
+goFetchData(false);
 
 /*
  * Penjelasan Promise :
@@ -91,7 +90,9 @@ import {
  * Kita juga bisa menambahkan kode blok finnaly yang berisikan kode yang ingin kita jalankan baik itu error maupun tidak.
  */
 
-// ---------- No 2 ----------
+// ------------------------------
+// ------------ No 2 ------------
+// ------------------------------
 const getListofProduct = (status, callback) => {
   try {
     getDataFromServer(status, callback);
@@ -101,12 +102,14 @@ const getListofProduct = (status, callback) => {
 };
 
 // Success
-// getListofProduct(true, processData);
+getListofProduct(true, processData);
 
 // Failed
-// getListofProduct(false, processData);
+getListofProduct(false, processData);
 
-// ---------- No 3 ----------
+// ------------------------------
+// ------------ No 3 ------------
+// ------------------------------
 function sortStrings(arr) {
   // source : https://www.geeksforgeeks.org/dsa/sorting-strings-using-bubble-sort-2/
   let temp;
@@ -123,33 +126,37 @@ function sortStrings(arr) {
   }
 }
 
-// (async () => {
-//   try {
-//     // Fetch data
-//     const result = await fetch("https://jsonplaceholder.typicode.com/users");
-//     if (!result.ok) throw new Error("Error fetching data");
-//     const body = await result.json();
+(async () => {
+  try {
+    // Fetch data
+    const result = await fetch("https://jsonplaceholder.typicode.com/users");
+    if (!result.ok) throw new Error("Error fetching data");
+    const body = await result.json();
 
-//     let userData = [];
-//     for (const element of body) {
-//       const userObj = {};
-//       Object.assign(userObj, { name: element.name });
-//       Object.assign(userObj, { city: element.address.city });
-//       userData[userData.length] = userObj;
-//     }
+    let userData = [];
+    for (const element of body) {
+      const userObj = {};
+      Object.assign(userObj, { name: element.name });
+      Object.assign(userObj, { city: element.address.city });
+      userData[userData.length] = userObj;
+    }
 
-//     // Sort arr according to city (ascending)
-//     sortStrings(userData); // Pass arr reference
-//     console.log(userData);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// })();
+    // Sort arr according to city (ascending)
+    sortStrings(userData); // Pass arr reference
+    console.log(userData);
+  } catch (error) {
+    console.error(error);
+  }
+})();
 
-// ---------- No 4 ----------
-// console.log(divideAndSort(5956560159466056));
+// ------------------------------
+// ------------ No 4 ------------
+// ------------------------------
+console.log(divideAndSort(5956560159466056));
 
-// ---------- No 5 ----------
+// ------------------------------
+// ------------ No 5 ------------
+// ------------------------------
 (async function name() {
   try {
     showWelcomeScreen();

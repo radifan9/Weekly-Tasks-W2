@@ -1,7 +1,6 @@
 import fs from "node:fs/promises";
 import path, { dirname } from "node:path";
 import chalk from "chalk";
-import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,10 +27,13 @@ export const mainUI = async () => {
 
 export const readPokedex = async () => {
   try {
+    // Read json file
     const result = await fs.readFile(
       path.join(__dirname, "/data/data.json"),
       "utf-8"
     );
+
+    // Jika file kosong di trim akan menghasilkan "" maka isi data menjadi []
     const data = result.trim() === "" ? [] : JSON.parse(result);
 
     if (result.trim() === "") {
@@ -145,7 +147,11 @@ export const editNumOfCaughtPokemon = async (index, num) => {
     data[index - 1].owned = num;
 
     // Save change
-    await fs.writeFile("data.json", JSON.stringify(data, null, 2), "utf-8");
+    await fs.writeFile(
+      path.join(__dirname, "/data/data.json"),
+      JSON.stringify(data, null, 2),
+      "utf-8"
+    );
     console.log("Number of caught pokemon successfully changed!");
   } catch (error) {
     console.error(error);

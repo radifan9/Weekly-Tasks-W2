@@ -15,6 +15,9 @@ import { getDataFromServer, processData } from "./src/dataFromServer.js";
 
 // No 3
 
+// No 4
+import { divideAndSort } from "./src/divideSort.js";
+
 // No 5
 import {
   showWelcomeScreen,
@@ -128,28 +131,31 @@ function sortStrings(arr) {
   }
 }
 
-(async () => {
-  try {
-    // Fetch data
-    const result = await fetch("https://jsonplaceholder.typicode.com/users");
-    if (!result.ok) throw new Error("Error fetching data");
-    const body = await result.json();
+// (async () => {
+//   try {
+//     // Fetch data
+//     const result = await fetch("https://jsonplaceholder.typicode.com/users");
+//     if (!result.ok) throw new Error("Error fetching data");
+//     const body = await result.json();
 
-    let userData = [];
-    for (const element of body) {
-      const userObj = {};
-      Object.assign(userObj, { name: element.name });
-      Object.assign(userObj, { city: element.address.city });
-      userData[userData.length] = userObj;
-    }
+//     let userData = [];
+//     for (const element of body) {
+//       const userObj = {};
+//       Object.assign(userObj, { name: element.name });
+//       Object.assign(userObj, { city: element.address.city });
+//       userData[userData.length] = userObj;
+//     }
 
-    // Sort arr according to city (ascending)
-    sortStrings(userData); // Pass arr reference
-    console.log(userData);
-  } catch (error) {
-    console.error(error);
-  }
-})();
+//     // Sort arr according to city (ascending)
+//     sortStrings(userData); // Pass arr reference
+//     console.log(userData);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// })();
+
+// No 4
+console.log(divideAndSort(5956560159466056));
 
 // No 5
 

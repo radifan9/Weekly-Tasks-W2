@@ -18,30 +18,31 @@ import {
   deletePokedexAtIndex,
   editNumOfCaughtPokemon,
 } from "./src/pokemon.js";
+
 // ------------------------------
 // ------------ No 1 ------------
 // ------------------------------
 // then-catch
 // Success
-fetchData(true)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// fetchData(true)
+//   .then((response) => {
+//     console.log(response);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 // Failed
 /*
  * Disini failed akan muncul duluan karena jika fail tidak menjalankan setTimeout
  */
-fetchData(false)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// fetchData(false)
+//   .then((response) => {
+//     console.log(response);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 // Try-Catch
 async function goFetchData(status) {
@@ -54,10 +55,10 @@ async function goFetchData(status) {
 }
 
 // Success
-goFetchData(true);
+// goFetchData(true);
 
 // Failed
-goFetchData(false);
+// goFetchData(false);
 
 /*
  * Penjelasan Promise :
@@ -102,10 +103,10 @@ const getListofProduct = (status, callback) => {
 };
 
 // Success
-getListofProduct(true, processData);
+// getListofProduct(true, processData);
 
 // Failed
-getListofProduct(false, processData);
+// getListofProduct(false, processData);
 
 // ------------------------------
 // ------------ No 3 ------------
@@ -126,20 +127,23 @@ function sortStrings(arr) {
   }
 }
 
-(async () => {
+const userData = async () => {
   try {
     // Fetch data
-    const result = await fetch("https://jsonplaceholder.typicode.com/users");
-    if (!result.ok) throw new Error("Error fetching data");
-    const body = await result.json();
+    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    if (!response.ok) throw new Error("Error fetching data");
+    const body = await response.json(); // Parse JSON as input, outuput JS obj
 
+    // Store user data as array of object
     let userData = [];
-    for (const element of body) {
+    userData = body.map((element) => {
       const userObj = {};
-      Object.assign(userObj, { name: element.name });
-      Object.assign(userObj, { city: element.address.city });
-      userData[userData.length] = userObj;
-    }
+      Object.assign(userObj, {
+        name: element.name,
+        city: element.address.city,
+      });
+      return userObj;
+    });
 
     // Sort arr according to city (ascending)
     sortStrings(userData); // Pass arr reference
@@ -147,60 +151,63 @@ function sortStrings(arr) {
   } catch (error) {
     console.error(error);
   }
-})();
+};
+
+// Run userData
+userData();
 
 // ------------------------------
 // ------------ No 4 ------------
 // ------------------------------
-console.log(divideAndSort(5956560159466056));
+// console.log(divideAndSort(5956560159466056));
 
 // ------------------------------
 // ------------ No 5 ------------
 // ------------------------------
-(async function name() {
-  try {
-    showWelcomeScreen();
+// (async function name() {
+//   try {
+//     showWelcomeScreen();
 
-    while (true) {
-      await readPokedex();
+//     while (true) {
+//       await readPokedex();
 
-      mainUI();
+//       mainUI();
 
-      const userUIInput = await input.question("\nWhat do you want to do? ");
+//       const userUIInput = await input.question("\nWhat do you want to do? ");
 
-      switch (userUIInput) {
-        case "1":
-          const userInputName = await input.question(
-            "Input name of the pokemon you caught : "
-          );
-          const userInputNumberOfOwned = await input.question(
-            `Input number of caught ${userInputName} : `
-          );
-          inputPokedex(userInputName, userInputNumberOfOwned);
-          break;
+//       switch (userUIInput) {
+//         case "1":
+//           const userInputName = await input.question(
+//             "Input name of the pokemon you caught : "
+//           );
+//           const userInputNumberOfOwned = await input.question(
+//             `Input number of caught ${userInputName} : `
+//           );
+//           inputPokedex(userInputName, userInputNumberOfOwned);
+//           break;
 
-        case "2":
-          const userInputPokemonIndex = await input.question(
-            "Input the index of pokemon you want to change? "
-          );
-          const userInputNum = await input.question(
-            "Input the new number of caught pokemon? "
-          );
-          editNumOfCaughtPokemon(userInputPokemonIndex, userInputNum);
-          break;
+//         case "2":
+//           const userInputPokemonIndex = await input.question(
+//             "Input the index of pokemon you want to change? "
+//           );
+//           const userInputNum = await input.question(
+//             "Input the new number of caught pokemon? "
+//           );
+//           editNumOfCaughtPokemon(userInputPokemonIndex, userInputNum);
+//           break;
 
-        case "3":
-          const userInputIndex = await input.question(
-            "Input pokédex index you want to delete : "
-          );
-          deletePokedexAtIndex(userInputIndex - 1);
-          break;
+//         case "3":
+//           const userInputIndex = await input.question(
+//             "Input pokédex index you want to delete : "
+//           );
+//           deletePokedexAtIndex(userInputIndex - 1);
+//           break;
 
-        default:
-          console.log("Invalid option. Please choose 1, 2, or 3.");
-      }
-    }
-  } catch (error) {
-    console.error(error);
-  }
-})();
+//         default:
+//           console.log("Invalid option. Please choose 1, 2, or 3.");
+//       }
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// })();

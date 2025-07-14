@@ -1,12 +1,15 @@
 export const divideAndSort = (nums) => {
+  // Convert from numbers to a string
+  // Split the string with "0" as the separator
   const dividedNums = nums.toString().split("0");
 
-  let newNums = [];
-  for (const groupOfNum of dividedNums) {
-    let arr = groupOfNum.split("");
-    arr.sort();
-    newNums = [...newNums, ...arr];
-  }
+  let newNums = dividedNums.map((groupOfNum) => {
+    let arr = groupOfNum.split(""); // Convert string into array
+    arr.sort((a, b) => a - b);
+    return arr;
+  });
 
-  return newNums.join("");
+  // flat() : creates a new array with all sub-array concatenate recursively
+  // then join them together as one string
+  return newNums.flat().join("");
 };

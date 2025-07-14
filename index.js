@@ -117,8 +117,14 @@ function sortStrings(arr) {
 
   // Sorting strings using bubble sort
   for (let j = 0; j < arr.length - 1; j++) {
+    // Outside loop : iterates through each position in the array
     for (let i = j + 1; i < arr.length; i++) {
+      // Inside loop : Compares the current element with remaining
       if (arr[j].city.localeCompare(arr[i].city) > 0) {
+        // Positive : arr[j] berada di belakang arr[i]
+        // Negative : arr[j] berada di depan arr[i]
+        // 0 : Kedua string sama
+        // Contoh : "Gwenborough".localeCompare("Aliyaview") => 1
         temp = arr[j];
         arr[j] = arr[i];
         arr[i] = temp;
